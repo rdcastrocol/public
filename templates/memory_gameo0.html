@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de Memoria</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Juego de Memoria</h1>
+<!-- ... (sin cambios en esta parte) ... -->
+<table id="memoryTable" class="table table-bordered">
+    {% for row in range(4) %}
+    <tr>
+        {% for col in range(4) %}
+        <td class="memory-cell" onclick="revealImage(this)">
+            {% if images %}
+               <div class="card" data-image="{{ url_for('static', filename='img/imagen' + images.pop()) }}">
+				<div class="card" data-image="{{ url_for('static', filename='img/imagen' + loop.index|string + '.jpg') }}">
+                    <img src="{{ url_for('static', filename='img/blank.jpg') }}" alt="Hidden Image">
+                </div>
+            {% else %}
+                <div class="card">
+                    <img src="{{ url_for('static', filename='img/blank.jpg') }}" alt="Hidden Image">
+                </div>
+            {% endif %}
+        </td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+<!-- ... (sin cambios en esta parte) ... -->
+
+        <div id="successMessage" class="alert alert-success" role="alert" style="display: none;">
+            ¡Éxito! Has encontrado todas las coincidencias.
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
